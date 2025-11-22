@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnvwo2t87x0tu"]
+
+[ext_resource type="Script" uid="uid://c2nb2hea0wusd" path="res://scenes/card/card.gd" id="1_imta7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_imta7"]
+light_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_b58wu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnn7r"]
+size = Vector2(22, 26)
+
+[node name="Card" type="Node2D"]
+modulate = Color(1, 1, 1, 0.65882355)
+material = SubResource("CanvasItemMaterial_imta7")
+script = ExtResource("1_imta7")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1.0964829, 0.64278084, 0, 1)
+position = Vector2(-3.5762787e-07, 1.7881393e-07)
+scale = Vector2(24, 30.000002)
+mesh = SubResource("QuadMesh_b58wu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qnn7r")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

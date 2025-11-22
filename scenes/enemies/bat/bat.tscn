@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://wxqxosoh3yo2"]
+
+[ext_resource type="Texture2D" uid="uid://ds3xx41dy5u2g" path="res://assets/inimigos/Morcego/Morcego_0001.png" id="1_jofwc"]
+[ext_resource type="Script" uid="uid://d0qqpj3ladmmr" path="res://scenes/enemies/bat/bat.gd" id="1_ss5yy"]
+[ext_resource type="Texture2D" uid="uid://b5ac6dwq4qjn0" path="res://assets/inimigos/Morcego/Morcego_0002.png" id="2_ss5yy"]
+[ext_resource type="PackedScene" uid="uid://cwvrqewcp6lq0" path="res://scenes/knight_soldier/hit_box.tscn" id="2_v5rac"]
+[ext_resource type="Texture2D" uid="uid://dlr4wy4vy28c6" path="res://assets/inimigos/Morcego/Morcego_0003.png" id="3_f0cyw"]
+[ext_resource type="Texture2D" uid="uid://ceqwhjms4s2gh" path="res://assets/inimigos/Morcego/Morcego_0004.png" id="4_m0x8h"]
+[ext_resource type="Texture2D" uid="uid://fg7yclcjjyle" path="res://assets/inimigos/Morcego/Morcego_0005.png" id="5_m5s8h"]
+[ext_resource type="Texture2D" uid="uid://dhlm4xwr8f2yd" path="res://assets/inimigos/Morcego/Morcego_0006.png" id="6_4ahko"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mu8he"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jofwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ss5yy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f0cyw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_m0x8h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m5s8h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4ahko")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jofwc"]
+radius = 7.0
+
+[node name="Bat" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 8
+motion_mode = 1
+script = ExtResource("1_ss5yy")
+attack_scene = ExtResource("2_v5rac")
+SPEED = 30
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_mu8he")
+autoplay = "default"
+frame_progress = 0.4858269
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jofwc")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 50.0
+
+[node name="AttackFrequency" type="Timer" parent="."]
+autostart = true
+
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="AttackFrequency" to="." method="_on_attack_frequency_timeout"]

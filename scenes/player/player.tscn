@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://d16enh3rnhx7v"]
+
+[ext_resource type="Texture2D" uid="uid://bxsb3nnr6d7km" path="res://assets/tiny dungeon/tile_0098.png" id="1_8afob"]
+[ext_resource type="Script" uid="uid://cgjin7erqe7s5" path="res://scenes/player/player.gd" id="1_dovo2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
+size = Vector2(12, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dovo2"]
+radius = 58.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 13
+script = ExtResource("1_dovo2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_8afob")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_dovo2")
+
+[node name="PlacementRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlacementRange"]
+shape = SubResource("CircleShape2D_dovo2")
+
+[connection signal="area_entered" from="PlacementRange" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="PlacementRange" to="." method="_on_area_2d_area_exited"]

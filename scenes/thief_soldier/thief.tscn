@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0h0f7gb8a8am"]
+
+[ext_resource type="Script" uid="uid://ctm2nbdpupovv" path="res://scenes/thief_soldier/thief.gd" id="1_qso15"]
+[ext_resource type="Texture2D" uid="uid://m6sockf3w28t" path="res://assets/random/progress-bar-circle.png" id="3_qso15"]
+[ext_resource type="Texture2D" uid="uid://ooupes0ou6gg" path="res://assets/own/Ladrao.png" id="3_ssut3"]
+[ext_resource type="Texture2D" uid="uid://dl80ruot7g1sm" path="res://assets/random/progress-bar-frame.png" id="4_ssut3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6ml20"]
+radius = 9.0
+
+[node name="Thief" type="CharacterBody2D" groups=["soldier"]]
+collision_mask = 12
+motion_mode = 1
+wall_min_slide_angle = 0.0
+safe_margin = 20.0
+script = ExtResource("1_qso15")
+SPEED = 50
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6ml20")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_ssut3")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 5.0
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 30.0
+
+[node name="CheckPath" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="AttackFrequency" type="Timer" parent="."]
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+texture_filter = 1
+offset_left = 6.000001
+offset_top = -15.999998
+offset_right = 134.0
+offset_bottom = 112.0
+scale = Vector2(0.09, 0.09)
+fill_mode = 4
+texture_under = ExtResource("3_qso15")
+texture_over = ExtResource("4_ssut3")
+texture_progress = ExtResource("3_qso15")
+tint_under = Color(0.23753911, 0.23753914, 0.23753911, 1)
+tint_over = Color(0.68307734, 0.6830774, 0.68307734, 1)
+tint_progress = Color(0, 0.81960785, 0, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
+[connection signal="timeout" from="CheckPath" to="." method="_on_check_path_timeout"]
+[connection signal="timeout" from="AttackFrequency" to="." method="_on_attack_frequency_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj2vl2skh5axo"]
+
+[ext_resource type="Script" uid="uid://bbh36gkll37ch" path="res://scenes/mage_soldier/mage_draggable.gd" id="1_kq26a"]
+[ext_resource type="Texture2D" uid="uid://6hcjvrj6onol" path="res://assets/own/Mago.png" id="2_5pomo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktyil"]
+size = Vector2(16, 16)
+
+[node name="SoldierDraggable" type="Node2D"]
+script = ExtResource("1_kq26a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_5pomo")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ktyil")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

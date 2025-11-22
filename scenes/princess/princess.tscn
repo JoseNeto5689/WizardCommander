@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b45wayshnk155"]
+
+[ext_resource type="Script" uid="uid://b2ac1pk4v5uc1" path="res://scenes/princess/princess.gd" id="1_5xbax"]
+[ext_resource type="Texture2D" uid="uid://5qrq5vb16bf2" path="res://assets/tiny dungeon/tile_0099.png" id="1_eujod"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5xbax"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_eujod")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xbax"]
+
+[node name="Princess" type="Node2D"]
+script = ExtResource("1_5xbax")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_5xbax")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_5xbax")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

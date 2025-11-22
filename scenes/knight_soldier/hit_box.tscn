@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwvrqewcp6lq0"]
+
+[ext_resource type="Script" uid="uid://btwoo3y7r45sq" path="res://scenes/knight_soldier/hit_box.gd" id="1_ju7yo"]
+[ext_resource type="Texture2D" uid="uid://cqqg7vx7lrw2q" path="res://assets/random/slash_0001.png" id="2_n5b60"]
+[ext_resource type="Texture2D" uid="uid://vuccej7yqucq" path="res://assets/random/slash_0002.png" id="3_16u48"]
+[ext_resource type="Texture2D" uid="uid://cgxbfd65i1fdi" path="res://assets/random/slash_0003.png" id="4_0l0wp"]
+[ext_resource type="Texture2D" uid="uid://bwrrvnal6v3ac" path="res://assets/random/slash_0004.png" id="5_xtr66"]
+[ext_resource type="Texture2D" uid="uid://clxtu38y4xbb0" path="res://assets/random/slash_0005.png" id="6_etr86"]
+[ext_resource type="Texture2D" uid="uid://fxjfa0lhg68" path="res://assets/random/slash_0006.png" id="7_psaow"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cr4ye"]
+size = Vector2(37, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hcc7j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n5b60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_16u48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0l0wp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xtr66")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_etr86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_psaow")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="HitBox" type="Node2D"]
+z_index = 1
+script = ExtResource("1_ju7yo")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_cr4ye")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -18)
+sprite_frames = SubResource("SpriteFrames_hcc7j")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

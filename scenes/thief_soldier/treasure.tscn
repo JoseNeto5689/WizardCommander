@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=3 uid="uid://deltn635s5di3"]
+
+[ext_resource type="Texture2D" uid="uid://b1i40sswvj4bj" path="res://assets/own/OpeningChest.png" id="1_cogdq"]
+[ext_resource type="Script" uid="uid://dihc2h6egr3ax" path="res://scenes/thief_soldier/treasure.gd" id="1_k3ifa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3ifa"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnuu2"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijsfy"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgxpv"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gila"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpvsm"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7l6jm"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5m8nu"]
+atlas = ExtResource("1_cogdq")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_au7er"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3ifa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnuu2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijsfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgxpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gila")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpvsm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7l6jm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5m8nu")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="Treasure" type="Node2D" groups=["treasure"]]
+script = ExtResource("1_k3ifa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_au7er")
+
+[node name="RightParticles" type="CPUParticles2D" parent="."]
+position = Vector2(2, 8)
+emitting = false
+amount = 15
+lifetime = 0.3
+speed_scale = 0.4
+randomness = 0.5
+direction = Vector2(0.5, -0.5)
+spread = 30.0
+gravity = Vector2(0, 300)
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+angle_max = 180.0
+scale_amount_min = 1.5
+scale_amount_max = 2.0
+color = Color(0.79, 0.55537003, 0.36339998, 1)
+
+[node name="LeftParticles" type="CPUParticles2D" parent="."]
+position = Vector2(-2, 8)
+emitting = false
+amount = 15
+lifetime = 0.3
+speed_scale = 0.4
+randomness = 0.5
+direction = Vector2(-0.5, -0.5)
+spread = 30.0
+gravity = Vector2(0, 300)
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+angle_max = 180.0
+scale_amount_min = 1.5
+scale_amount_max = 2.0
+color = Color(0.7882353, 0.5568628, 0.3647059, 1)

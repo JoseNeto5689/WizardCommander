@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8hi2i4r8fwe6"]
+
+[ext_resource type="Texture2D" uid="uid://d1eg881ai00tl" path="res://assets/Sprite sheet for Basic Pack.png" id="1_472ju"]
+[ext_resource type="Script" uid="uid://cssqu3kkci562" path="res://scenes/card/card_ui.gd" id="2_eee5w"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eee5w"]
+texture = ExtResource("1_472ju")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(869, 6, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o5hel"]
+texture = ExtResource("1_472ju")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(869, 6, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ax82"]
+texture = ExtResource("1_472ju")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(869, 6, 22, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4xq2n"]
+
+[node name="Card" type="Button"]
+modulate = Color(1, 1, 1, 0.7372549)
+custom_minimum_size = Vector2(20, 30)
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 0.22777778
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_eee5w")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_o5hel")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4ax82")
+theme_override_styles/focus = SubResource("StyleBoxTexture_4xq2n")
+script = ExtResource("2_eee5w")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 3
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]

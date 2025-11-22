@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfm0vly4bvxy0"]
+
+[ext_resource type="Texture2D" uid="uid://df1xg3v15n21" path="res://assets/tiny dungeon/tile_0085.png" id="1_2j5y6"]
+[ext_resource type="Script" uid="uid://sifhyx8rjrh1" path="res://scenes/player/player_grid.gd" id="1_pmiyy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmiyy"]
+size = Vector2(14, 14)
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_pmiyy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_pmiyy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_2j5y6")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(24, 0)

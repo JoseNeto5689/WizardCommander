@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://blikupby10ryw"]
+
+[ext_resource type="Script" uid="uid://cggjurjlyvnm5" path="res://scenes/enemies/ghost/ghost.gd" id="1_bun0q"]
+[ext_resource type="Texture2D" uid="uid://c02bfos7kmhwo" path="res://assets/inimigos/Fantasma Rabo/Fantasma Rabo_0001.png" id="2_80ad7"]
+[ext_resource type="Texture2D" uid="uid://dmdffpe5t351e" path="res://assets/inimigos/Fantasma Rabo/Fantasma Rabo_0002.png" id="3_j5or4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iuaqy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_80ad7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_j5or4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bun0q"]
+radius = 8.0
+
+[node name="Ghost" type="CharacterBody2D"]
+collision_layer = 4
+motion_mode = 1
+script = ExtResource("1_bun0q")
+SPEED = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_iuaqy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_bun0q")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

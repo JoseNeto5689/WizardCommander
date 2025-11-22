@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://bld0u4bixaqwu"]
+
+[ext_resource type="Script" uid="uid://douh5wwykkt5f" path="res://scenes/mage_soldier/mage.gd" id="1_27x3d"]
+[ext_resource type="PackedScene" uid="uid://cwxe6722mqng1" path="res://scenes/mage_soldier/projectile.tscn" id="2_jvtji"]
+[ext_resource type="Script" uid="uid://d3agcnh5m7evw" path="res://scenes/card/unplaceble.gd" id="2_ktyil"]
+[ext_resource type="Texture2D" uid="uid://6hcjvrj6onol" path="res://assets/own/Mago.png" id="3_7m6m3"]
+[ext_resource type="Script" uid="uid://4uatb0yamnfg" path="res://scenes/mage_soldier/ray_cast_2d.gd" id="5_jvtji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyb8r"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ktyil"]
+radius = 98.02041
+
+[node name="Mage" type="Node2D"]
+script = ExtResource("1_27x3d")
+projectile_scene = ExtResource("2_jvtji")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_7m6m3")
+
+[node name="UnplacebleArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("2_ktyil")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnplacebleArea"]
+shape = SubResource("RectangleShape2D_oyb8r")
+
+[node name="Range" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_ktyil")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 12
+script = ExtResource("5_jvtji")
+
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="can_shoot" from="RayCast2D" to="." method="_on_ray_cast_2d_can_shoot"]

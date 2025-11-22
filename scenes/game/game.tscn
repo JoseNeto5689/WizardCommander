@@ -1,0 +1,149 @@
+[gd_scene load_steps=25 format=3 uid="uid://bqfffnonkog2y"]
+
+[ext_resource type="PackedScene" uid="uid://b3maq3843qqt8" path="res://scenes/map/map.tscn" id="1_7h61r"]
+[ext_resource type="Script" uid="uid://5vya65n1i1ed" path="res://scenes/game/game.gd" id="1_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://d16enh3rnhx7v" path="res://scenes/player/player.tscn" id="2_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://bld0u4bixaqwu" path="res://scenes/mage_soldier/mage.tscn" id="2_5i0tg"]
+[ext_resource type="PackedScene" uid="uid://cj2vl2skh5axo" path="res://scenes/mage_soldier/mage_draggable.tscn" id="3_bdhmt"]
+[ext_resource type="PackedScene" uid="uid://bk0j7r32h8gbp" path="res://scenes/knight_soldier/knight.tscn" id="4_4j704"]
+[ext_resource type="PackedScene" uid="uid://dd5d12rn445uw" path="res://scenes/knight_soldier/knight_draggable.tscn" id="5_kp23o"]
+[ext_resource type="PackedScene" uid="uid://ckbuet8mpc2lh" path="res://scenes/barbarian_soldier/barbarian_draggable.tscn" id="7_3xj4h"]
+[ext_resource type="PackedScene" uid="uid://dre0v58etrp56" path="res://scenes/archer_soldier/archer_draggable.tscn" id="9_3jaai"]
+[ext_resource type="PackedScene" uid="uid://b3xn3by3ahi7q" path="res://scenes/thief_soldier/thief_draggable.tscn" id="11_1iff4"]
+[ext_resource type="Texture2D" uid="uid://bapdtg5yblfru" path="res://assets/own/Cavaleiro.png" id="11_5jirj"]
+[ext_resource type="Texture2D" uid="uid://6hcjvrj6onol" path="res://assets/own/Mago.png" id="12_vaxfo"]
+[ext_resource type="Texture2D" uid="uid://d242q5iy0pyea" path="res://assets/own/Barbaro.png" id="13_otnwt"]
+[ext_resource type="PackedScene" uid="uid://b45wayshnk155" path="res://scenes/princess/princess.tscn" id="13_vaxfo"]
+[ext_resource type="PackedScene" uid="uid://dyvhwlhrwgjip" path="res://scenes/ui/ui.tscn" id="14_ftsea"]
+[ext_resource type="PackedScene" uid="uid://wxqxosoh3yo2" path="res://scenes/enemies/bat/bat.tscn" id="14_otnwt"]
+[ext_resource type="PackedScene" uid="uid://b8hi2i4r8fwe6" path="res://scenes/card/card_ui.tscn" id="15_otnwt"]
+[ext_resource type="PackedScene" uid="uid://7j0avr5waysw" path="res://scenes/barbarian_soldier/barbarian_reworked.tscn" id="16_3xj4h"]
+[ext_resource type="Texture2D" uid="uid://ct6146olgtaee" path="res://assets/own/Arqueiro.png" id="16_gc57s"]
+[ext_resource type="PackedScene" uid="uid://cj7w3gbtvea4e" path="res://scenes/archer_soldier/archer.tscn" id="17_5v6r0"]
+[ext_resource type="Texture2D" uid="uid://ooupes0ou6gg" path="res://assets/own/Ladrao.png" id="17_8b66f"]
+[ext_resource type="PackedScene" uid="uid://deltn635s5di3" path="res://scenes/thief_soldier/treasure.tscn" id="18_10c2w"]
+[ext_resource type="PackedScene" uid="uid://b0h0f7gb8a8am" path="res://scenes/thief_soldier/thief.tscn" id="19_pg2xm"]
+
+[sub_resource type="Environment" id="Environment_ftsea"]
+background_mode = 3
+glow_enabled = true
+glow_hdr_threshold = 1.5
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_lfrn8")
+mage_scene = ExtResource("2_5i0tg")
+mage_draggable = ExtResource("3_bdhmt")
+knight_scene = ExtResource("4_4j704")
+knight_draggable = ExtResource("5_kp23o")
+barbarian_scene = ExtResource("16_3xj4h")
+barbarian_draggable = ExtResource("7_3xj4h")
+archer_scene = ExtResource("17_5v6r0")
+archer_draggable = ExtResource("9_3jaai")
+thief_scene = ExtResource("19_pg2xm")
+thief_draggable = ExtResource("11_1iff4")
+knight_cost = 5
+barbarian_cost = 5
+mage_cost = 5
+archer_cost = 5
+thief_cost = 5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ftsea")
+
+[node name="Map" parent="." instance=ExtResource("1_7h61r")]
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("2_0sr1o")]
+position = Vector2(24, 54)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+physics_interpolation_mode = 1
+process_callback = 0
+limit_left = 0
+limit_top = 0
+position_smoothing_enabled = true
+
+[node name="Soldiers" type="Node2D" parent="."]
+
+[node name="Princess" parent="." instance=ExtResource("13_vaxfo")]
+position = Vector2(92, 73)
+
+[node name="UI" parent="." instance=ExtResource("14_ftsea")]
+
+[node name="KnightCard" parent="UI" instance=ExtResource("15_otnwt")]
+anchor_left = 0.04375
+anchor_top = 0.16111112
+anchor_right = 0.075
+offset_left = 1.0
+offset_top = 107.0
+offset_right = 21.0
+offset_bottom = 137.0
+card_image = ExtResource("11_5jirj")
+
+[node name="MageCard" parent="UI" instance=ExtResource("15_otnwt")]
+anchor_top = 0.16111112
+anchor_right = 0.03125
+offset_left = 57.0
+offset_top = 107.0
+offset_right = 77.0
+offset_bottom = 137.0
+card_image = ExtResource("12_vaxfo")
+
+[node name="BarbarianCard" parent="UI" instance=ExtResource("15_otnwt")]
+anchor_left = 0.30900002
+anchor_top = 0.76100004
+anchor_right = 0.409
+anchor_bottom = 0.989
+offset_left = 46.119995
+offset_top = 0.019989014
+offset_right = 46.119995
+offset_bottom = -0.020004272
+card_image = ExtResource("13_otnwt")
+
+[node name="ArcherCard" parent="UI" instance=ExtResource("15_otnwt")]
+anchor_left = 0.30900002
+anchor_top = 0.76100004
+anchor_right = 0.409
+anchor_bottom = 0.989
+offset_left = 1.1199951
+offset_top = 0.019989014
+offset_right = 1.1199951
+offset_bottom = -0.020004272
+card_image = ExtResource("16_gc57s")
+
+[node name="ThiefCard" parent="UI" instance=ExtResource("15_otnwt")]
+anchor_left = 0.30900002
+anchor_top = 0.76100004
+anchor_right = 0.409
+anchor_bottom = 0.989
+offset_left = 93.119995
+offset_top = 0.019989014
+offset_right = 93.119995
+offset_bottom = -0.020004272
+card_image = ExtResource("17_8b66f")
+
+[node name="Bat" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_otnwt")]
+position = Vector2(276, 223)
+target = NodePath("../Princess")
+
+[node name="Bat2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_otnwt")]
+position = Vector2(250, 254)
+target = NodePath("../Princess")
+
+[node name="Archer" parent="." instance=ExtResource("17_5v6r0")]
+position = Vector2(175, 109)
+
+[node name="Thief" parent="." instance=ExtResource("19_pg2xm")]
+position = Vector2(63, 16)
+
+[node name="Treasure" parent="." instance=ExtResource("18_10c2w")]
+position = Vector2(200, 42)
+
+[node name="Treasure2" parent="." instance=ExtResource("18_10c2w")]
+position = Vector2(248, 42)
+
+[connection signal="clicked" from="UI/KnightCard" to="." method="_on_knight_card_clicked"]
+[connection signal="clicked" from="UI/MageCard" to="." method="_on_mage_card_clicked"]
+[connection signal="clicked" from="UI/BarbarianCard" to="." method="_on_barbarian_card_clicked"]
+[connection signal="clicked" from="UI/ArcherCard" to="." method="_on_archer_card_clicked"]
+[connection signal="clicked" from="UI/ThiefCard" to="." method="_on_thief_card_clicked"]

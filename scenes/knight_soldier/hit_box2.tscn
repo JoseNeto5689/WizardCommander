@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://xs8t3hrvgdt5"]
+
+[ext_resource type="Script" uid="uid://btwoo3y7r45sq" path="res://scenes/knight_soldier/hit_box.gd" id="1_5okcm"]
+[ext_resource type="Texture2D" uid="uid://t1nlv770vep4" path="res://assets/random/sukuna_slash_v2.png" id="8_0h1ra"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cr4ye"]
+size = Vector2(37, 9)
+
+[sub_resource type="Animation" id="Animation_0l0wp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.505)]
+}
+
+[sub_resource type="Animation" id="Animation_16u48"]
+resource_name = "slash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 0.101), Vector2(0.5, 0.505)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0l0wp"]
+_data = {
+&"RESET": SubResource("Animation_0l0wp"),
+&"slash": SubResource("Animation_16u48")
+}
+
+[node name="HitBox" type="Node2D"]
+script = ExtResource("1_5okcm")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_cr4ye")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 0.7842926
+scale = Vector2(0.5, 0.505)
+texture = ExtResource("8_0h1ra")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0l0wp")
+}
+autoplay = "slash"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
