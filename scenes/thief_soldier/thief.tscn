@@ -56,7 +56,12 @@ tint_progress = Color(0, 0.81960785, 0, 1)
 wait_time = 5.0
 one_shot = true
 
+[node name="AutoDestruct" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="timeout" from="CheckPath" to="." method="_on_check_path_timeout"]
 [connection signal="timeout" from="AttackFrequency" to="." method="_on_attack_frequency_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="AutoDestruct" to="." method="_on_auto_destruct_timeout"]

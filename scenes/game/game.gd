@@ -26,6 +26,13 @@ var current_class = ""
 
 func _ready() -> void:
 	Global.money_updated.connect($UI.change_money_value)
+	Global.commander_updated.connect(commander_update)
+
+func commander_update(commander_name: String):
+	var soldiers = get_tree().get_nodes_in_group("soldier")
+	for soldier in soldiers:
+		soldier.upgrade_by_commander()
+	print(soldiers)
 
 func update_money(value: int) -> bool:
 	if Global.money - value < 0:
@@ -91,15 +98,20 @@ func spawn_from_draggable():
 			return
 		match current_class:
 			"mage":
-				spawn_soldier(mage_scene)
+				if update_money(mage_cost):
+					spawn_soldier(mage_scene)
 			"knight":
-				spawn_soldier(knight_scene)
+				if update_money(knight_cost):
+					spawn_soldier(knight_scene)
 			"barbarian":
-				spawn_soldier(barbarian_scene)
+				if update_money(barbarian_cost):
+					spawn_soldier(barbarian_scene)
 			"thief":
-				spawn_soldier(thief_scene)
+				if update_money(thief_cost):
+					spawn_soldier(thief_scene)
 			"archer":
-				spawn_soldier(archer_scene)	
+				if update_money(archer_cost):
+					spawn_soldier(archer_scene)	
 			
 		current_class = ""
 		clear_actual_soldier()
@@ -107,49 +119,34 @@ func spawn_from_draggable():
 
 func _on_knight_card_clicked(has_clicked: bool) -> void:
 	if has_clicked == true:
-		if update_money(knight_cost):
-			spawn_knight_draggable()
-		else:
-			print("no money")
+		spawn_knight_draggable()
 	else:
 		spawn_from_draggable()
 
 
 func _on_mage_card_clicked(has_clicked: bool) -> void:
 	if has_clicked == true:
-		if update_money(mage_cost):
-			spawn_mage_draggable()
-		else:
-			print("no money")
+		spawn_mage_draggable()
 	else:
 		spawn_from_draggable()
 		
 		
 func _on_barbarian_card_clicked(has_clicked: bool) -> void:
 	if has_clicked == true:
-		if update_money(barbarian_cost):
-			spawn_barbarian_draggable()
-		else:
-			print("no money")
+		spawn_barbarian_draggable()
 	else:
 		spawn_from_draggable()
 
 func _on_archer_card_clicked(has_clicked: bool) -> void:
 	if has_clicked == true:
-		if update_money(archer_cost):
-			spawn_archer_draggable()
-		else:
-			print("no money")
+		spawn_archer_draggable()
 	else:
 		spawn_from_draggable()
 
 
 func _on_thief_card_clicked(has_clicked: bool) -> void:
 	if has_clicked == true:
-		if update_money(thief_cost):
-			spawn_thief_draggable()
-		else:
-			print("no money")
+		spawn_thief_draggable()
 	else:
 		spawn_from_draggable()
 

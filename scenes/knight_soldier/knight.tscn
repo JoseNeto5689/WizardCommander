@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bk0j7r32h8gbp"]
+[gd_scene load_steps=13 format=3 uid="uid://bk0j7r32h8gbp"]
 
 [ext_resource type="Script" uid="uid://dt0nqlw8xxj51" path="res://scenes/knight_soldier/knight.gd" id="1_hh1w5"]
 [ext_resource type="PackedScene" uid="uid://bxfbsy4vti0c3" path="res://scenes/archer_soldier/projectile.tscn" id="2_gpt1l"]
 [ext_resource type="Texture2D" uid="uid://bapdtg5yblfru" path="res://assets/own/Cavaleiro.png" id="3_hwcit"]
 [ext_resource type="Script" uid="uid://d3agcnh5m7evw" path="res://scenes/card/unplaceble.gd" id="4_hi3tu"]
+[ext_resource type="Texture2D" uid="uid://bn1fml5n8pbbu" path="res://assets/own/Martelo de Guerra.png" id="5_axbog"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyb8r"]
 size = Vector2(16, 16)
@@ -11,7 +12,65 @@ size = Vector2(16, 16)
 [sub_resource type="CircleShape2D" id="CircleShape2D_ktyil"]
 radius = 27.018513
 
-[node name="Knight" type="Node2D"]
+[sub_resource type="Animation" id="Animation_fsrw1"]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.9547687622336491]
+}
+
+[sub_resource type="Animation" id="Animation_61par"]
+resource_name = "default"
+
+[sub_resource type="Animation" id="Animation_onfrd"]
+resource_name = "left_slash"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -2.1816616, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_axbog"]
+resource_name = "slash"
+length = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Pivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 2.1816616, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_onfrd"]
+_data = {
+&"RESET": SubResource("Animation_fsrw1"),
+&"default": SubResource("Animation_61par"),
+&"left_slash": SubResource("Animation_onfrd"),
+&"slash": SubResource("Animation_axbog")
+}
+
+[node name="Knight" type="Node2D" groups=["soldier"]]
 script = ExtResource("1_hh1w5")
 projectile_scene = ExtResource("2_gpt1l")
 
@@ -36,6 +95,20 @@ shape = SubResource("CircleShape2D_ktyil")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="Pivot" type="Node2D" parent="Pivot"]
+position = Vector2(6, 6)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Pivot/Pivot"]
+position = Vector2(5, -6)
+texture = ExtResource("5_axbog")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_onfrd")
+}
 
 [connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
 [connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]

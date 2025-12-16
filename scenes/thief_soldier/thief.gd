@@ -4,6 +4,8 @@ extends CharacterBody2D
 @onready var progress_bar := $ProgressBar
 @onready var nav_agent := $NavigationAgent2D
 
+@export var validade := false
+
 @export var SPEED := 0
 
 var spawn_point: Vector2 = Vector2.ZERO
@@ -22,6 +24,11 @@ func _ready() -> void:
 	
 func get_treasures():
 	treasures = get_tree().get_nodes_in_group("treasure")
+	var new_list = []
+	for item in treasures:
+		if not item.choosed:
+			new_list.append(item)
+	treasures = new_list
 	
 func go_to_treasure():
 	if treasures.is_empty():
@@ -29,6 +36,9 @@ func go_to_treasure():
 		can_move = true
 	else:
 		target_treasure = treasures[0]
+		target_treasure.choosed = true
+		tree_exited.connect(target_treasure.stop_animation)
+		timer.wait_time = target_treasure.duration
 		select_target(target_treasure.global_position)
 		can_move = true
 
@@ -96,9 +106,10 @@ func _on_navigation_agent_2d_target_reached() -> void:
 	if nav_agent.target_position != target_reached :
 		can_move = false
 		progress_bar.visible = true
-		timer.start()
 		target_reached = nav_agent.target_position
-		target_treasure.play_for_duration("default", 5)
+		$Timer.wait_time = target_treasure.duration
+		timer.start()
+		target_treasure.play_for_duration("default")
 		return
 
 func _on_timer_timeout() -> void:
@@ -106,5 +117,10 @@ func _on_timer_timeout() -> void:
 		await get_tree().create_timer(0.5).timeout
 		can_move = true
 		progress_bar.hide()
-		treasures.erase(target_treasure)
+		get_treasures()
 		go_to_treasure()
+
+
+func _on_auto_destruct_timeout() -> void:
+	if validade:
+		queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bqfffnonkog2y"]
+[gd_scene load_steps=26 format=3 uid="uid://bqfffnonkog2y"]
 
 [ext_resource type="PackedScene" uid="uid://b3maq3843qqt8" path="res://scenes/map/map.tscn" id="1_7h61r"]
 [ext_resource type="Script" uid="uid://5vya65n1i1ed" path="res://scenes/game/game.gd" id="1_lfrn8"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://ooupes0ou6gg" path="res://assets/own/Ladrao.png" id="17_8b66f"]
 [ext_resource type="PackedScene" uid="uid://deltn635s5di3" path="res://scenes/thief_soldier/treasure.tscn" id="18_10c2w"]
 [ext_resource type="PackedScene" uid="uid://b0h0f7gb8a8am" path="res://scenes/thief_soldier/thief.tscn" id="19_pg2xm"]
+[ext_resource type="PackedScene" uid="uid://clcroevf3w7c" path="res://scenes/spawn/spawn.tscn" id="23_1iff4"]
 
 [sub_resource type="Environment" id="Environment_ftsea"]
 background_mode = 3
@@ -122,25 +123,29 @@ offset_right = 93.119995
 offset_bottom = -0.020004272
 card_image = ExtResource("17_8b66f")
 
-[node name="Bat" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_otnwt")]
-position = Vector2(276, 223)
-target = NodePath("../Princess")
-
-[node name="Bat2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("14_otnwt")]
-position = Vector2(250, 254)
-target = NodePath("../Princess")
-
-[node name="Archer" parent="." instance=ExtResource("17_5v6r0")]
-position = Vector2(175, 109)
-
-[node name="Thief" parent="." instance=ExtResource("19_pg2xm")]
-position = Vector2(63, 16)
-
 [node name="Treasure" parent="." instance=ExtResource("18_10c2w")]
 position = Vector2(200, 42)
 
 [node name="Treasure2" parent="." instance=ExtResource("18_10c2w")]
 position = Vector2(248, 42)
+
+[node name="Spawn" parent="." node_paths=PackedStringArray("target") instance=ExtResource("23_1iff4")]
+position = Vector2(384, 212)
+monster = ExtResource("14_otnwt")
+target = NodePath("../Princess")
+interval = 3
+
+[node name="Spawn2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("23_1iff4")]
+position = Vector2(376, 259)
+monster = ExtResource("14_otnwt")
+target = NodePath("../Princess")
+interval = 3
+
+[node name="Spawn3" parent="." node_paths=PackedStringArray("target") instance=ExtResource("23_1iff4")]
+position = Vector2(331, 295)
+monster = ExtResource("14_otnwt")
+target = NodePath("../Princess")
+interval = 3
 
 [connection signal="clicked" from="UI/KnightCard" to="." method="_on_knight_card_clicked"]
 [connection signal="clicked" from="UI/MageCard" to="." method="_on_mage_card_clicked"]

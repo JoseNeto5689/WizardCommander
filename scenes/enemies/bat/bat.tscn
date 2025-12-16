@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://wxqxosoh3yo2"]
+[gd_scene load_steps=13 format=3 uid="uid://wxqxosoh3yo2"]
 
 [ext_resource type="Texture2D" uid="uid://ds3xx41dy5u2g" path="res://assets/inimigos/Morcego/Morcego_0001.png" id="1_jofwc"]
 [ext_resource type="Script" uid="uid://d0qqpj3ladmmr" path="res://scenes/enemies/bat/bat.gd" id="1_ss5yy"]
@@ -38,6 +38,12 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_jofwc"]
 radius = 7.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_v5rac"]
+radius = 75.16648
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ryrt"]
+radius = 18.0
+
 [node name="Bat" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 8
@@ -55,10 +61,6 @@ frame_progress = 0.4858269
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jofwc")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.3
-autostart = true
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_postprocessing = 1
 avoidance_enabled = true
@@ -67,6 +69,25 @@ radius = 50.0
 [node name="AttackFrequency" type="Timer" parent="."]
 autostart = true
 
+[node name="CheckPlayersArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPlayersArea"]
+shape = SubResource("CircleShape2D_v5rac")
+
+[node name="CheckPlayersCloseRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckPlayersCloseRange"]
+shape = SubResource("CircleShape2D_8ryrt")
+
+[node name="FindPlayer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="tree_exited" from="." to="." method="_on_tree_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="AttackFrequency" to="." method="_on_attack_frequency_timeout"]
+[connection signal="body_entered" from="CheckPlayersArea" to="." method="_on_check_players_area_body_entered"]
+[connection signal="body_exited" from="CheckPlayersArea" to="." method="_on_check_players_area_body_exited"]
+[connection signal="body_entered" from="CheckPlayersCloseRange" to="." method="_on_check_players_close_range_body_entered"]
+[connection signal="body_exited" from="CheckPlayersCloseRange" to="." method="_on_check_players_close_range_body_exited"]
+[connection signal="timeout" from="FindPlayer" to="." method="_on_find_player_timeout"]

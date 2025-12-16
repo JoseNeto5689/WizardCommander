@@ -12,7 +12,7 @@ size = Vector2(16, 16)
 [sub_resource type="CircleShape2D" id="CircleShape2D_ktyil"]
 radius = 98.02041
 
-[node name="Archer" type="Node2D"]
+[node name="Archer" type="Node2D" groups=["soldier"]]
 script = ExtResource("1_jhvf6")
 projectile_scene = ExtResource("2_0o3yl")
 

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var nav_agent := $NavigationAgent2D
-@export var life = 3
+@export var life = 8
 @export var SPEED := 50
 @export var attack_scene : PackedScene
 
@@ -26,8 +26,11 @@ func _physics_process(delta: float) -> void:
 	if not actual_targets.is_empty():
 		start_combat()
 
-func hit(damage : int):
-	life -= damage
+func upgrade_by_commander():
+	$AttackFrequency.wait_time = 0.3
+
+func hit():
+	life -= 1
 	if life <= 0:
 		die()
 		

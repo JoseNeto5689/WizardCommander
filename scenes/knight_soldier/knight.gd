@@ -4,7 +4,6 @@ var targets = []
 @export var projectile_scene : PackedScene
 var hit_box_scene : PackedScene = preload("res://scenes/knight_soldier/hit_box.tscn")
 
-
 func _on_range_body_entered(body: Node2D) -> void:
 	targets.append(body)
 
@@ -28,15 +27,27 @@ func _on_timer_timeout() -> void:
 	print(enemy)
 	if enemy == null:
 		return
+	var is_left = false
+	if enemy.global_position.x < global_position.x:
+		$Pivot/Pivot/Sprite2D2.flip_h = true
+		$Pivot/Pivot.position.x = -6
+		$Pivot/Pivot/Sprite2D2.position.x = -5
+		is_left = true
+	else:
+		$Pivot/Pivot/Sprite2D2.flip_h = false
+		$Pivot/Pivot.position.x = 6
+		$Pivot/Pivot/Sprite2D2.position.x = 5
 	var last_position: Vector2 = enemy.global_position - global_position
-	#var future_position: Vector2 = last_position + (enemy.direction.normalized()*enemy.SPEED/4)
 	var hit_box = hit_box_scene.instantiate()
 	hit_box.rotation = (last_position.angle()) + 3*PI/2
-	#var distance = last_position.normalized() * $Range/CollisionShape2D.shape.radius
-	#hit_box.position += distance
 	if last_position < to_local(global_position):
 		$Sprite2D.flip_h = true
 	else:
 		$Sprite2D.flip_h = false
 	hit_box.position = last_position
 	add_child(hit_box)
+	if is_left:
+		$AnimationPlayer.play("left_slash")
+	else:
+		$AnimationPlayer.play("slash")
+	
